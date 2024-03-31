@@ -1,18 +1,15 @@
 return {
 	"neovim/nvim-lspconfig",
-	dependencies = {
-		"hrsh7th/nvim-cmp",
-		"hrsh7th/cmp-buffer",
-		"hrsh7th/cmp-path",
-		"L3MON4D3/LuaSnip",
-		"saadparwaiz1/cmp_luasnip",
-		"hrsh7th/cmp-nvim-lsp",
-		"hrsh7th/cmp-nvim-lua",
-	},
 	config = function()
-		require("lspconfig").nil_ls.setup({})
-		require("lspconfig").tsserver.setup({})
+		local capabilities = require("cmp_nvim_lsp").default_capabilities()
+		require("lspconfig").nil_ls.setup({
+			capabilities = capabilities,
+		})
+		require("lspconfig").tsserver.setup({
+			capabilities = capabilities,
+		})
 		require("lspconfig").lua_ls.setup({
+			capabilities = capabilities,
 			on_init = function(client)
 				local path = client.workspace_folders[1].name
 				if vim.loop.fs_stat(path .. "/.luarc.json") or vim.loop.fs_stat(path .. "/.luarc.jsonc") then
