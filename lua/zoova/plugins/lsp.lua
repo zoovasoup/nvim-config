@@ -1,10 +1,33 @@
 return {
 	"neovim/nvim-lspconfig",
 	config = function()
-		local capabilities = require("cmp_nvim_lsp").default_capabilities()
+		local cmp_lsp = require("cmp_nvim_lsp")
+		local capabilities = vim.tbl_deep_extend(
+			"force",
+			{},
+			vim.lsp.protocol.make_client_capabilities(),
+			cmp_lsp.default_capabilities()
+		)
+
+		-- local capabilities = require("cmp_nvim_lsp").default_capabilities()
+
+		-- require("lspconfig").nil_ls.setup({
+		-- 	capabilities = capabilities,
+		-- })
+
 		require("lspconfig").nil_ls.setup({
+			autostart = true,
 			capabilities = capabilities,
+			settings = {
+				["nil"] = {
+					testSetting = 42,
+					formatting = {
+						command = { "nixpkgs-fmt" },
+					},
+				},
+			},
 		})
+
 		require("lspconfig").tsserver.setup({
 			capabilities = capabilities,
 		})

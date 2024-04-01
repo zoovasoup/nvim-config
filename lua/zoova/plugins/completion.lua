@@ -1,6 +1,7 @@
 return {
 	"hrsh7th/nvim-cmp",
 	dependencies = {
+		"onsails/lspkind.nvim",
 		"L3MON4D3/LuaSnip",
 		"hrsh7th/cmp-path",
 		"hrsh7th/cmp-buffer",
@@ -11,6 +12,8 @@ return {
 	config = function()
 		vim.opt.completeopt = { "menu", "menuone", "noselect" }
 		local cmp = require("cmp")
+		local lspkind = require("lspkind")
+		local luasnip = require("luasnip")
 
 		-- Global setup.
 		cmp.setup({
@@ -19,9 +22,23 @@ return {
 					require("luasnip").lsp_expand(args.body) -- For `luasnip` users.
 				end,
 			},
+
+			formatting = {
+				format = lspkind.cmp_format({
+					mode = "text",
+					menu = {
+						buffer = "[Buffer]",
+						nvim_lsp = "[LSP]",
+						luasnip = "[LuaSnip]",
+						nvim_lua = "[Lua]",
+						latex_symbols = "[Latex]",
+					},
+				}),
+			},
+
 			window = {
-				-- completion = cmp.config.window.bordered(),
-				-- documentation = cmp.config.window.bordered(),
+				completion = cmp.config.window.bordered(),
+				documentation = cmp.config.window.bordered(),
 			},
 			mapping = cmp.mapping.preset.insert({
 				["<C-d>"] = cmp.mapping.scroll_docs(-4),
@@ -31,11 +48,14 @@ return {
 			}),
 			sources = cmp.config.sources({
 				{ name = "nvim_lsp" },
-				{ name = "luasnip" }, -- For luasnip users.
-				-- { name = 'snippy' }, -- For snippy users.
-				-- { name = 'ultisnips' }, -- For ultisnips users.
-			}, {
+				{ name = "luasnip" },
 				{ name = "buffer" },
+				{ name = "path" },
+				{ name = "nvim_lua" },
+				-- 	{ name = "nvim_lsp" },
+				-- 	{ name = "luasnip" }, -- For luasnip users.
+				-- }, {
+				-- 	{ name = "buffer" },
 			}),
 		})
 	end,
