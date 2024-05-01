@@ -8,12 +8,10 @@ opt.number = true -- shows absolute line number on cursor line (when relative nu
 opt.tabstop = 2 -- 2 spaces for tabs (prettier default)
 opt.shiftwidth = 2 -- 2 spaces for indent width
 opt.expandtab = true -- expand tab to spaces
--- opt.autoindent = true -- copy indent from current line when starting new one
-opt.smartindent = true
+opt.autoindent = true -- copy indent from current line when starting new one
 
 -- line wrapping
 opt.wrap = true -- disable line wrapping
-opt.linebreak = true
 
 -- search settings
 opt.ignorecase = true -- ignore case when searching
@@ -24,15 +22,11 @@ opt.cursorline = true -- highlight the current cursor line
 
 -- appearance
 
-opt.hlsearch = false
-opt.incsearch = true
-
 -- turn on termguicolors for nightfly colorscheme to work
 -- (have to use iterm2 or any other true color terminal)
 opt.termguicolors = true
 opt.background = "dark" -- colorschemes that can be light or dark will be made dark
 opt.signcolumn = "yes" -- show sign column so that text doesn't shift
--- opt.colorcolumn = "80"
 
 -- backspace
 opt.backspace = "indent,eol,start" -- allow backspace on indent, end of line or insert mode start position
@@ -44,12 +38,5 @@ opt.clipboard:append("unnamedplus") -- use system clipboard as default register
 opt.splitright = true -- split vertical window to the right
 opt.splitbelow = true -- split horizontal window to the bottom
 
-opt.swapfile = false -- turn off swapfile
-vim.opt.backup = false
-vim.opt.undodir = os.getenv("HOME") .. "/.vim/undodir"
-vim.opt.undofile = true
-
-vim.g.netrw_liststyle = 3
--- vim.g.netrw_banner = 0
-vim.g.netrw_winsize = 25
-vim.g.netrw_bannerbackslash = 1
+-- turn off swapfile
+opt.swapfile = false

@@ -1,65 +1,24 @@
 return {
-	-- HARPOON 2.0
-	"ThePrimeagen/harpoon",
-	branch = "harpoon2",
-	dependencies = {
-		"nvim-lua/plenary.nvim",
-		"nvim-telescope/telescope.nvim",
-	},
+  "ThePrimeagen/harpoon",
+  dependencies = {
+    "nvim-lua/plenary.nvim",
+  },
+  config = function()
+    -- set keymaps
+    local keymap = vim.keymap -- for conciseness
 
-	config = function()
-		local harpoon = require("harpoon")
-
-		harpoon:setup()
-
-		local conf = require("telescope.config").values
-		local function toggle_telescope(harpoon_files)
-			local file_paths = {}
-			for _, item in ipairs(harpoon_files.items) do
-				table.insert(file_paths, item.value)
-			end
-
-			require("telescope.pickers")
-				.new({}, {
-					prompt_title = "Harpoon",
-					finder = require("telescope.finders").new_table({
-						results = file_paths,
-					}),
-					previewer = conf.file_previewer({}),
-					sorter = conf.generic_sorter({}),
-				})
-				:find()
-		end
-
-		vim.keymap.set("n", "<leader>a", function()
-			harpoon:list():append()
-		end)
-		vim.keymap.set("n", "<leader>pt", function()
-			toggle_telescope(harpoon:list())
-		end)
-		vim.keymap.set("n", "<C-s>", function()
-			harpoon.ui:toggle_quick_menu(harpoon:list())
-		end)
-
-		vim.keymap.set("n", "<C-m>", function()
-			harpoon:list():select(1)
-		end)
-		vim.keymap.set("n", "<C-n>", function()
-			harpoon:list():select(2)
-		end)
-		vim.keymap.set("n", "<C-e>", function()
-			harpoon:list():select(3)
-		end)
-		vim.keymap.set("n", "<C-i>", function()
-			harpoon:list():select(4)
-		end)
-
-		-- Toggle previous & next buffers stored within Harpoon list
-		vim.keymap.set("n", "<C-S-P>", function()
-			harpoon:list():prev()
-		end)
-		vim.keymap.set("n", "<C-S-N>", function()
-			harpoon:list():next()
-		end)
-	end,
+    keymap.set(
+      "n",
+      "<leader>hm",
+      "<cmd>lua require('harpoon.mark').add_file()<cr>",
+      { desc = "Mark file with harpoon" }
+    )
+    keymap.set("n", "<leader>hn", "<cmd>lua require('harpoon.ui').nav_next()<cr>", { desc = "Go to next harpoon mark" })
+    keymap.set(
+      "n",
+      "<leader>hp",
+      "<cmd>lua require('harpoon.ui').nav_prev()<cr>",
+      { desc = "Go to previous harpoon mark" }
+    )
+  end,
 }
